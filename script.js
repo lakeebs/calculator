@@ -12,30 +12,34 @@ buttons.forEach(button => {
 
 // Button functions
 function buttonClick(e) {
-  const maxChars = 8;
+  const maxChars = 9;
 
-  // If the display shows a number that isn't zero
-  if (display.innerText !== '0') {
-    if (display.innerText.length < maxChars) {
-      if (e.target.classList.contains('op')) { // If the user clicked an operator
-        num1 = display.innerText;
-        op = e.target.innerText;
-      } else if (e.target.classList.contains('num')) { // If the user clicked a number
+  if (display.innerText.length < maxChars && display.innerText !== '0') {
+
+    if (e.target.classList.contains('op')) {
+      num1 = display.innerText;
+      op = e.target.innerText;
+    } else if (e.target.classList.contains('num')) {
+      if(op == undefined) {
         display.innerText += e.target.innerText;
+      } else { // if the operator is stored
+          if(op) { 
+            // if last clicked button was operator
+            // 
+            display.innerText = '';
+          }
+          display.innerText += e.target.innerText;
+      }
+
+    } else if (e.target.classList.contains('equals')) {
+      if (num1 !== undefined && num2 !== undefined && op !== undefined) {
+        return parseInt(num1) + op + parseInt(num2);
       }
     }
 
-  // If the display shows a zero or if a value is stored in op
-  } else if (display.innerText === '0' || op !== undefined) {
-    console.log(op);
+  }  else if (display.innerText === '0') {
     display.innerText = '';
-    let newNum = document.createTextNode(e.target.innerText);
-    display.appendChild(newNum);
-  }
-
-  if (e.target.classList.contains('sum')) {
-  // check if num1, num2, and op exist, perform the operation
-
+    display.innerText += e.target.innerText;
   }
   
 };
