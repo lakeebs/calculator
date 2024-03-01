@@ -1,8 +1,8 @@
 // Variables
-let op;
-let num1;
-let num2;
+let opClicked = false;
+let numPushed = false;
 let display = document.querySelector('.display');
+let operator = document.querySelector('.operator');
 const buttons = document.querySelectorAll('button');
 
 // Event listener
@@ -10,42 +10,47 @@ buttons.forEach(button => {
   button.addEventListener('click', buttonClick);
 });
 
+// Calculation
+const calc = [];
+
 // Button functions
 function buttonClick(e) {
-  const maxChars = 9;
+  const maxChars = 8;
 
   if (display.innerText.length < maxChars && display.innerText !== '0') {
-
     if (e.target.classList.contains('op')) {
-      num1 = display.innerText;
-      op = e.target.innerText;
-    } else if (e.target.classList.contains('num')) {
-      if(op == undefined) {
+      operator.innerText = e.target.innerText;
+      opClicked = true;
+      numPushed = false; // Reset to false
+    }
+    
+    else if (e.target.classList.contains('num')) {
+      if(opClicked == false) {
         display.innerText += e.target.innerText;
-      } else { // if the operator is stored
-          if(op) { 
-            // if last clicked button was operator
-            // 
-            display.innerText = '';
-          }
+      } 
+      else if (opClicked == true) {
+        if(numPushed == false) {
+          calc.push(display.innerText);
+          numPushed = true;
+          calc.push(operator.innerText);
+          opClicked = false; // Reset to false
+          display.innerText = '';
           display.innerText += e.target.innerText;
+        } else if (numPushed == true) {
+          display.innerText += e.target.innerText;
+        }
       }
-
-    } else if (e.target.classList.contains('equals')) {
-      if (num1 !== undefined && num2 !== undefined && op !== undefined) {
-        return parseInt(num1) + op + parseInt(num2);
+    } 
+    
+    else if (e.target.classList.contains('equals')) {
+      if (numPushed == true && opClicked == true) {
+        return;
       }
     }
 
-  }  else if (display.innerText === '0') {
-    display.innerText = '';
-    display.innerText += e.target.innerText;
+  } else if (display.innerText === '0') {
+      display.innerText = '';
+      display.innerText += e.target.innerText;
   }
   
 };
-
-// Operator functions
-function add(num1, num2) { return num1 + num2; };
-function subtract(num1, num2) { return num1 - num2; };
-function multiply(num1, num2) { return num1 * num2; };
-function divide(num1, num2) { return num1 / num2; };
