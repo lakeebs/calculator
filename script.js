@@ -5,6 +5,7 @@ let currentNum;
 let opClicked = false;
 let operated = false;
 let equalClicked = false;
+let percentageClicked = false;
 let display = document.querySelector('.display');
 let clear = document.querySelector('#row2 button:first-child');
 let operatorBox = document.querySelector('.operator');
@@ -27,6 +28,7 @@ function allClear() {
   operatorBox.textContent = '';
   clear.textContent = 'AC';
   equalClicked = false;
+  percentageClicked = false;
   clear.classList.add('all-clear');
   clear.classList.remove('clear');
   return;
@@ -64,10 +66,11 @@ function buttonClick(e) {
       // ...and operator hasn't been clicked
       if (!opClicked) {
 
-        // If the result includes a decimal, the 'prevent multiple decimals' code will prevent a decimal from being typed
-        if (equalClicked) {
+        // If the display includes a decimal, the 'prevent multiple decimals' code will prevent a decimal from being typed. So, we empty the display first.
+        if (equalClicked || percentageClicked) {
           display.textContent = '';
           equalClicked = false;
+          percentageClicked = false;
         }
 
         // Prevent multiple decimals
@@ -166,10 +169,9 @@ function buttonClick(e) {
 
     // IF USER CLICKS THE PERCENTAGE BUTTON
     if (e.target.classList.contains('percentage')) {
-      // if display shows a decimal, move decimal two to the left
-
-      // if display doesn't show a decimal, add decimal two spaces from the right
-
+      let percentage = display.textContent * Math.pow(10, -2);
+      display.textContent = percentage;
+      percentageClicked = true;
       return;
     }
 
@@ -241,7 +243,6 @@ function operate(prevNum, currentNum, operator) {
 }
 
 // Tasks
-// percentage function
 // keyboard support
 // touch support
 // easter egg
