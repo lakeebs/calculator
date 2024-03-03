@@ -4,8 +4,7 @@ let operator;
 let currentNum;
 let opClicked = false;
 let operated = false;
-let equalClicked = false;
-let percentageClicked = false;
+let showsDecimal = false;
 let display = document.querySelector('.display');
 let clear = document.querySelector('#row2 button:first-child');
 let operatorBox = document.querySelector('.operator');
@@ -27,8 +26,7 @@ function allClear() {
   display.textContent = '0';
   operatorBox.textContent = '';
   clear.textContent = 'AC';
-  equalClicked = false;
-  percentageClicked = false;
+  showsDecimal = false;
   clear.classList.add('all-clear');
   clear.classList.remove('clear');
   return;
@@ -67,10 +65,9 @@ function buttonClick(e) {
       if (!opClicked) {
 
         // If the display includes a decimal, the 'prevent multiple decimals' code will prevent a decimal from being typed. So, we empty the display first.
-        if (equalClicked || percentageClicked) {
+        if (showsDecimal) {
           display.textContent = '';
-          equalClicked = false;
-          percentageClicked = false;
+          showsDecimal = false;
         }
 
         // Prevent multiple decimals
@@ -138,10 +135,13 @@ function buttonClick(e) {
           return;
         }
 
+        if(display.textContent.indexOf('-') !== -1) {
+          showsDecimal = true;
+        }
+
         prevNum = '';
         currentNum = '';
         operator = '';
-        equalClicked = true;
       } else {
         return;
       }
@@ -160,7 +160,7 @@ function buttonClick(e) {
     // IF USER CLICKS THE CLEAR BUTTON
     if (e.target.classList.contains('clear')) {
       display.textContent = '0';
-      equalClicked = false;
+      showsDecimal = false;
       clear.classList.add('all-clear');
       clear.classList.remove('clear');
       clear.textContent = 'AC';
@@ -171,7 +171,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('percentage')) {
       let percentage = display.textContent * Math.pow(10, -2);
       display.textContent = percentage;
-      percentageClicked = true;
+      showsDecimal = true;
       return;
     }
 
@@ -181,7 +181,7 @@ function buttonClick(e) {
   if (display.textContent == '0' && e.target.classList.contains('num')) {
     display.textContent = '';
     display.textContent += e.target.textContent;
-    equalClicked = false;
+    showsDecimal = false;
 
     // Switch from AC to C for every number except 0
     if (!(e.target.classList.contains('zero'))) {
