@@ -21,10 +21,15 @@ buttons.forEach(button => {
 function buttonClick(e) {
 
   // If display doesn't read 0
-  if (display.textContent.length <= maxChars && display.textContent !== '0') {
+  if (display.textContent !== '0') {
 
     // IF USER CLICKS A NUMBER
     if (e.target.classList.contains('num')) {
+
+      // Limit max chars
+      if ((display.textContent.length == maxChars) && !opClicked) {
+        return;
+      }
 
       // ...and operator has been clicked
       if (opClicked) {
@@ -51,17 +56,19 @@ function buttonClick(e) {
           }
         }
 
+        // If operate() hasn't run and operated is false
         if (!operated) {
           display.textContent += e.target.textContent;
           e.target.classList.contains('decimal') ? addZeroToDecimal() : null;
           return;
         }
-        
+
+        // If operate() has run and operated is true
         if (operated) {
 
-          if (!prevNum) {
-            display.textContent = '';
-          }
+          // if (!prevNum) {
+          //   display.textContent = '';
+          // }
 
           operated = false;
           display.textContent += e.target.textContent;
@@ -144,7 +151,7 @@ function buttonClick(e) {
       clear.classList.remove('clear');
       clear.textContent = 'AC';
 
-      // In the off case where the user clicks clear while opClicked, clear all.
+      // On the off chance the user clicks clear while opClicked, clear all.
       if (opClicked) {
         operatorBox.textContent = '';
         prevNum = '';
@@ -203,7 +210,12 @@ function operate(prevNum, currentNum, operator) {
   const add = (prevNum, currentNum) => parseFloat(prevNum) + parseFloat(currentNum);
   const subtract = (prevNum, currentNum) => parseFloat(prevNum) - parseFloat(currentNum);
   const multiply = (prevNum, currentNum) => parseFloat(prevNum) * parseFloat(currentNum);
-  const divide = (prevNum, currentNum) => parseFloat(prevNum) / parseFloat(currentNum);
+  const divide = (prevNum, currentNum) => {
+    if (parseFloat(currentNum) === 0) {
+      return 0;
+    }
+    parseFloat(prevNum) / parseFloat(currentNum);
+  }
 
   switch (operator) {
     case '+':
@@ -262,10 +274,13 @@ function addZeroToDecimal() {
   }
 };
 
+function divideByZero () {
+  
+}
+
 // Tasks
 // keyboard support
 // touch support
 // easter egg
-// maxchars function (code block doesn't run after maxchars reached)
 // message when dividing by 0
 // design
