@@ -10,6 +10,7 @@ let clear = document.querySelector('#row2 button:first-child');
 let operatorBox = document.querySelector('.operator');
 let result = parseFloat(display.textContent);
 const buttons = document.querySelectorAll('button');
+const maxChars = 7;
 
 // Event listeners
 buttons.forEach(button => {
@@ -17,37 +18,10 @@ buttons.forEach(button => {
 });
 
 // Functions
-function allClear() {
-  prevNum = '';
-  operator = '';
-  currentNum = '';
-  opClicked = false;
-  operated = false;
-  display.textContent = '0';
-  operatorBox.textContent = '';
-  clear.textContent = 'AC';
-  showsDecimal = false;
-  clear.classList.add('all-clear');
-  clear.classList.remove('clear');
-  return;
-}
-
-function addZeroToDecimal() {
-  if (display.textContent.charAt(0) === '.') {
-    display.textContent = '0' + display.textContent;
-  }
-}
-
 function buttonClick(e) {
-  const maxChars = 6;
 
   // If display doesn't read 0
   if (display.textContent.length <= maxChars && display.textContent !== '0') {
-
-    // if (display.textContent.length == maxChars) {
-    //   console.log('limit reached');
-    //   display.textContent = display.textContent.substring(0, maxChars);
-    // }
 
     // IF USER CLICKS A NUMBER
     if (e.target.classList.contains('num')) {
@@ -84,6 +58,11 @@ function buttonClick(e) {
         }
         
         if (operated) {
+
+          if (!prevNum) {
+            display.textContent = '';
+          }
+
           operated = false;
           display.textContent += e.target.textContent;
           e.target.classList.contains('decimal') ? addZeroToDecimal() : null;
@@ -135,7 +114,7 @@ function buttonClick(e) {
           return;
         }
 
-        if(display.textContent.indexOf('-') !== -1) {
+        if(display.textContent.indexOf('.') !== -1) {
           showsDecimal = true;
         }
 
@@ -164,12 +143,29 @@ function buttonClick(e) {
       clear.classList.add('all-clear');
       clear.classList.remove('clear');
       clear.textContent = 'AC';
+
+      // In the off case where the user clicks clear while opClicked, clear all.
+      if (opClicked) {
+        operatorBox.textContent = '';
+        prevNum = '';
+        currentNum = '';
+        operator = '';
+        operated = false;
+        opClicked = false;
+      }
+
       return;
     }
 
     // IF USER CLICKS THE PERCENTAGE BUTTON
     if (e.target.classList.contains('percentage')) {
       let percentage = display.textContent * Math.pow(10, -2);
+      
+      // Truncate output to maxChars
+      if (percentage.toString().length > maxChars + 1) { // Plus one to dismiss the decimal
+        percentage = percentage.toString().substring(0, maxChars).replace(/\.?0*$/, '');
+      }
+
       display.textContent = percentage;
       showsDecimal = true;
       return;
@@ -224,12 +220,7 @@ function operate(prevNum, currentNum, operator) {
       break;
   }
 
-  // Check if result has decimal places
-  if (result % 1 !== 0) {
-    result = result.toPrecision(5) / 1; // Dividing by 1 removes trailing zeroes
-  } else {
-    result = parseInt(result);
-  }
+  result = formatResult(result);
 
   // Show result
   if (result == 0) {
@@ -240,12 +231,41 @@ function operate(prevNum, currentNum, operator) {
     operated = true;
   }
 
-}
+};
+
+function formatResult(num) {
+  let numStr = num.toString();
+  if (numStr.length > maxChars) {
+    numStr = num.toExponential(2);
+  }
+  return numStr;
+};
+
+function allClear() {
+  prevNum = '';
+  operator = '';
+  currentNum = '';
+  opClicked = false;
+  operated = false;
+  display.textContent = '0';
+  operatorBox.textContent = '';
+  clear.textContent = 'AC';
+  showsDecimal = false;
+  clear.classList.add('all-clear');
+  clear.classList.remove('clear');
+  return;
+};
+
+function addZeroToDecimal() {
+  if (display.textContent.charAt(0) === '.') {
+    display.textContent = '0' + display.textContent;
+  }
+};
 
 // Tasks
 // keyboard support
 // touch support
 // easter egg
-// maxchars function (code block doesn't run after maxchars reached, result shows more than 8 chars)
+// maxchars function (code block doesn't run after maxchars reached)
 // message when dividing by 0
 // design
