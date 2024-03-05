@@ -72,25 +72,6 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Touch event listener (prevent double tapping to zoom)
-let lastTapTime = 0;
-
-// Prevent double tapping on touch devices
-document.addEventListener('touchend', function(event) {
-
-  const currentTime = new Date().getTime();
-  const timeSinceLastTap = currentTime - lastTapTime;
-
-  // Check if the time between two taps is less than a certain threshold
-  if (timeSinceLastTap < 300) {
-    // If the time between two taps is too short, prevent the default behavior of the second tap
-    event.preventDefault();
-  }
-
-  // Update the last tap time to the current time
-  lastTapTime = currentTime;
-});
-
 // Button event listener
 buttons.forEach(button => {
   button.addEventListener('click', buttonClick);
