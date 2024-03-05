@@ -72,6 +72,15 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+// Touch event listener (prevent double tapping to zoom)
+document.addEventListener('touchstart', function(event) {
+  // Check if more than one touch point is active
+  if (event.touches.length > 1) {
+    // If more than one touch point is active, prevent default behavior
+    event.preventDefault();
+  }
+}, { passive: false });
+
 // Button event listener
 buttons.forEach(button => {
   button.addEventListener('click', buttonClick);
@@ -383,7 +392,3 @@ function addZeroToDecimal() {
     display.textContent = '0' + display.textContent;
   }
 };
-
-
-// touch support
-// design
