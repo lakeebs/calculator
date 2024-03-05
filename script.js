@@ -10,9 +10,69 @@ let clear = document.querySelector('#row2 button:first-child');
 let operatorBox = document.querySelector('.operator');
 let result = parseFloat(display.textContent);
 const buttons = document.querySelectorAll('button');
+const buttonsArray = Array.from(buttons);
 const maxChars = 7;
+const keyMap = {
+  '+': '+',
+  '-': '−',
+  '*': '×',
+  '/': '÷',
+  '.': '.',
+  '%': '%',
+  'Enter': '=',
+  'Delete': 'C',
+  'Backspace': 'C',
+  'Delete-AC': 'AC', // Add a hyphen to create custom branches
+  'Backspace-AC': 'AC',
+  '0': '0',
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9'
+};
 
-// Event listeners
+// Keypad event listener
+let lastKeyPressTime = 0;
+let lastKeyPressKey = '';
+
+document.addEventListener('keydown', function(e) {
+  const key = e.key;
+
+  if (keyMap[key]) {
+
+    // Return the value corresponding to the matched key
+    const pressedButton = buttonsArray.find(button => button.textContent === keyMap[key]);
+
+    if (pressedButton) {
+      pressedButton.click();
+    }
+  } 
+  
+  if (e.key === 'Delete' || e.key === 'Backspace') {
+    
+    const currentTime = new Date().getTime();
+
+    if (key === lastKeyPressKey && currentTime - lastKeyPressTime < 300) { // Adjust the double tap time
+      const acButton = 'AC';
+      const pressedButton = buttonsArray.find(button => button.textContent === acButton);
+
+      if (pressedButton) {
+        pressedButton.click();
+      }
+    }
+
+    lastKeyPressTime = currentTime;
+    lastKeyPressKey = key;
+
+  }
+});
+
+// Button event listener
 buttons.forEach(button => {
   button.addEventListener('click', buttonClick);
 });
@@ -117,7 +177,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('equals')) {
 
       if (display.textContent == '838383') {
-        display.textContent = 'hi baby';
+        display.textContent = 'hi jennie';
         display.classList.add('egg');
         operated = true;
         return;
@@ -325,6 +385,5 @@ function addZeroToDecimal() {
 };
 
 
-// keyboard support
 // touch support
 // design
