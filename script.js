@@ -17,7 +17,7 @@ buttons.forEach(button => {
   button.addEventListener('click', buttonClick);
 });
 
-// Functions
+// Button click function
 function buttonClick(e) {
 
   // If display doesn't read 0
@@ -27,12 +27,18 @@ function buttonClick(e) {
     if (e.target.classList.contains('num')) {
 
       // Limit max chars
-      if ((display.textContent.length == maxChars) && !opClicked) {
+      if ((display.textContent.length == maxChars) && !opClicked && (!display.textContent.includes('e')) && !operated) {
         return;
       }
 
       // ...and operator has been clicked
       if (opClicked) {
+
+        // If the user clicked zero
+        if (e.target.classList.contains('zero')) {
+          currentNum = '0';
+        }
+
         operator = operatorBox.textContent;
         display.textContent = '';
         operatorBox.textContent = '';
@@ -65,12 +71,8 @@ function buttonClick(e) {
 
         // If operate() has run and operated is true
         if (operated) {
-
-          // if (!prevNum) {
-          //   display.textContent = '';
-          // }
-
           operated = false;
+          display.textContent = '';
           display.textContent += e.target.textContent;
           e.target.classList.contains('decimal') ? addZeroToDecimal() : null;
         }
@@ -112,6 +114,7 @@ function buttonClick(e) {
 
     // IF USER CLICKS THE EQUALS BUTTON
     if (e.target.classList.contains('equals')) {
+
       if (prevNum && operator) {
         currentNum = display.textContent;
 
@@ -151,7 +154,12 @@ function buttonClick(e) {
       clear.classList.remove('clear');
       clear.textContent = 'AC';
 
-      // On the off chance the user clicks clear while opClicked, clear all.
+      // On the off chance the user does an operation, clicks equals, and clicks clear
+      if (operated) {
+        operated = false;
+      }
+
+      // On the off chance the user clicks clear while opClicked, clear all
       if (opClicked) {
         operatorBox.textContent = '';
         prevNum = '';
@@ -181,7 +189,7 @@ function buttonClick(e) {
   }
 
   // If the display reads 0 and user clicks a number
-  if (display.textContent == '0' && e.target.classList.contains('num')) {
+  if (display.textContent == '0' && e.target.classList.contains('num') && currentNum !== '0') {
     display.textContent = '';
     display.textContent += e.target.textContent;
     showsDecimal = false;
@@ -196,6 +204,22 @@ function buttonClick(e) {
     // Prepend a 0 if the number starts with a decimal
     e.target.classList.contains('decimal') ? addZeroToDecimal() : null;
     return;
+
+  } 
+  
+  // If the currentNum is 0 (if the user deliberately clicked 0)
+  else if (currentNum == '0') {
+
+    if (e.target.classList.contains('equals')) {
+      if (prevNum && operator) {
+        operate(prevNum, currentNum, operator);
+      }
+      prevNum = '';
+      operator = '';
+      currentNum = '';
+      operated = true;
+    }
+
   }
 
   // If user clicks the AC button
@@ -205,16 +229,18 @@ function buttonClick(e) {
 
 }
 
+// Operate function
 function operate(prevNum, currentNum, operator) {
 
   const add = (prevNum, currentNum) => parseFloat(prevNum) + parseFloat(currentNum);
   const subtract = (prevNum, currentNum) => parseFloat(prevNum) - parseFloat(currentNum);
   const multiply = (prevNum, currentNum) => parseFloat(prevNum) * parseFloat(currentNum);
   const divide = (prevNum, currentNum) => {
-    if (parseFloat(currentNum) === 0) {
-      return 0;
+    if (currentNum == '0') {
+      return 8008135;
+    } else {
+      return parseFloat(prevNum) / parseFloat(currentNum);
     }
-    parseFloat(prevNum) / parseFloat(currentNum);
   }
 
   switch (operator) {
@@ -245,14 +271,29 @@ function operate(prevNum, currentNum, operator) {
 
 };
 
+// Format result function
 function formatResult(num) {
   let numStr = num.toString();
-  if (numStr.length > maxChars) {
-    numStr = num.toExponential(2);
+
+  // Check if the number is in exponential notation
+  if (numStr.includes('e')) {
+    return numStr; // Return as is if already in exponential notation
   }
-  return numStr;
+
+  // Check if the number has trailing zeros
+  if (numStr.includes('.') && !numStr.includes('e')) {
+    numStr = num.toFixed(10).replace(/\.?0*$/, ''); // Truncate trailing zeros
+  }
+
+  // Check if the number exceeds maxChars
+  if (numStr.length > maxChars) {
+    return num.toExponential(2);
+  }
+  // If not, return the number with a fixed number of decimal places
+  return parseFloat(num.toFixed(2)).toString();
 };
 
+// All clear function
 function allClear() {
   prevNum = '';
   operator = '';
@@ -268,19 +309,15 @@ function allClear() {
   return;
 };
 
+// Add zero to decimal function
 function addZeroToDecimal() {
   if (display.textContent.charAt(0) === '.') {
     display.textContent = '0' + display.textContent;
   }
 };
 
-function divideByZero () {
-  
-}
-
 // Tasks
 // keyboard support
 // touch support
 // easter egg
-// message when dividing by 0
 // design
