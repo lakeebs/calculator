@@ -87,7 +87,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('num')) {
 
       // Limit max chars
-      if ((display.textContent.length == maxChars) && !opClicked && (!display.textContent.includes('e')) && !operated && !display.classList.contains('egg')) {
+      if ((display.textContent.length >= maxChars) && !opClicked && (!display.textContent.includes('e')) && !operated && !display.classList.contains('egg')) {
         return;
       }
 
