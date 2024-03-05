@@ -27,7 +27,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('num')) {
 
       // Limit max chars
-      if ((display.textContent.length == maxChars) && !opClicked && (!display.textContent.includes('e')) && !operated) {
+      if ((display.textContent.length == maxChars) && !opClicked && (!display.textContent.includes('e')) && !operated && !display.classList.contains('egg')) {
         return;
       }
 
@@ -72,6 +72,7 @@ function buttonClick(e) {
         // If operate() has run and operated is true
         if (operated) {
           operated = false;
+          display.classList.remove('egg');
           display.textContent = '';
           display.textContent += e.target.textContent;
           e.target.classList.contains('decimal') ? addZeroToDecimal() : null;
@@ -114,6 +115,13 @@ function buttonClick(e) {
 
     // IF USER CLICKS THE EQUALS BUTTON
     if (e.target.classList.contains('equals')) {
+
+      if (display.textContent == '838383') {
+        display.textContent = 'hi baby';
+        display.classList.add('egg');
+        operated = true;
+        return;
+      }
 
       if (prevNum && operator) {
         currentNum = display.textContent;
@@ -316,8 +324,7 @@ function addZeroToDecimal() {
   }
 };
 
-// Tasks
+
 // keyboard support
 // touch support
-// easter egg
 // design
