@@ -35,6 +35,13 @@ a {
   color: #4648a9;
 }
 
+@supports (-webkit-touch-callout: none) {
+  /* Safari-specific CSS */
+  #outer-wrapper {
+    margin-top: 0; /* Remove margin-top for Safari */
+  }
+}
+
 #outer-wrapper {
   align-items: center;
   display: flex;
