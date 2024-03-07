@@ -16,12 +16,22 @@
   touch-action: manipulation;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 html, body {
   font-family: sans-serif;
-  font-size: 14px;
   font-weight: bold;
   height: 100%;
   overflow: hidden;
+}
+
+@supports (-webkit-touch-callout: none) {
+  /* Safari-specific CSS */
+  html, body {
+    overflow: auto;
+  }
 }
 
 body {
@@ -35,20 +45,13 @@ a {
   color: #4648a9;
 }
 
-@supports (-webkit-touch-callout: none) {
-  /* Safari-specific CSS */
-  #outer-wrapper {
-    margin-top: 0; /* Remove margin-top for Safari */
-  }
-}
-
 #outer-wrapper {
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
-  margin-top: 2.2rem;
+  margin-top: 4rem;
 }
 
 h1 {
@@ -62,7 +65,7 @@ h1 {
   margin: -4px;
   padding: .7rem .5rem 0;
   position: absolute;
-  top: -2.2rem;
+  top: -4rem;
 }
 
 #inner-wrapper {
@@ -103,7 +106,7 @@ h1 {
   border: 2px solid #322c59;
   color: #00efea;
   font-family: 'digital-7regular', sans-serif;
-  font-size: 4.5rem;
+  font-size: 6rem;
   line-height: 1;
   padding: 3px 10px;
   text-align: right;
@@ -121,12 +124,17 @@ button {
   color: #00efea;
   cursor: pointer;
   font-family: 'Nunito Sans',sans-serif;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 600;
-  min-height: 60px;
-  min-width: 60px;
+  min-height: 5.5rem;
+  min-width: 5.5rem;
   transition: border-color 300ms ease-out;
   width: 25%;
+  white-space: nowrap;
+}
+
+button.all-clear, button.clear, button.posneg, button.percentage {
+  font-size: 2.5rem;
 }
 
 button:active, button.active, button.equals:active {
@@ -167,7 +175,7 @@ button.op:active, button.op.active {
 .small {
   color: #484281;
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 10px;
+  font-size: 1rem;
   margin-top: 10px;
   padding-bottom: 20px;
   text-align: center;
