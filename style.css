@@ -27,17 +27,6 @@ html, body {
   overflow: hidden;
 }
 
-@supports (-webkit-touch-callout: none) {
-  /* Safari-specific CSS */
-  html, body {
-    overflow: auto;
-  }
-
-  #outer-wrapper {
-    margin-top: 0;
-  }
-}
-
 body {
   background: #1d1240;
   background-image: linear-gradient(to bottom, #110c30 10%, #150e3d 60%), 
@@ -55,7 +44,7 @@ a {
   flex-direction: column;
   height: 100vh;
   justify-content: center;
-  margin-top: 4rem;
+  /* margin-top: 4rem; */
 }
 
 h1 {

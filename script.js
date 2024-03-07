@@ -432,6 +432,11 @@ function operate(prevNum, currentNum, operator) {
 function formatResult(num) {
   let numStr = num.toString();
 
+  // Check if the number exceeds maxChars
+  if (numStr.length > maxChars) {
+    return num.toExponential(2);
+  }
+
   // Check if the number is in exponential notation
   if (numStr.includes('e')) {
     return numStr; // Return as is if already in exponential notation
@@ -442,10 +447,6 @@ function formatResult(num) {
     numStr = num.toFixed(10).replace(/\.?0*$/, ''); // Truncate trailing zeros
   }
 
-  // Check if the number exceeds maxChars
-  if (numStr.length > maxChars) {
-    return num.toExponential(2);
-  }
   // If not, return the number with a fixed number of decimal places
   return parseFloat(num.toFixed(2)).toString();
 };
