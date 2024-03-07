@@ -21,6 +21,7 @@ html, body {
   font-size: 14px;
   font-weight: bold;
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -28,7 +29,6 @@ body {
   background-image: linear-gradient(to bottom, #110c30 10%, #150e3d 60%), 
   repeating-linear-gradient(0deg, #444cf7, #444cf7 1px, #000000 1px, #000000);
   background-size: 7px 7px;
-  overflow: hidden;
 }
 
 a {
