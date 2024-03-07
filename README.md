@@ -1,2 +1,2 @@
-# calculator
-Just a simple calculator
+# Neon Calculator
+Just a basic calculator
