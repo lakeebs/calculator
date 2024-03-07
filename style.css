@@ -38,8 +38,9 @@ a {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 95vh;
+  height: 100vh;
   justify-content: center;
+  margin-top: 2.2em;
 }
 
 h1 {
@@ -158,7 +159,7 @@ button.op:active, button.op.active {
   color: #484281;
   font-family: 'Nunito Sans', sans-serif;
   font-size: 10px;
-  padding-bottom: 20px;
+  margin-top: 20px;
   text-align: center;
   text-transform: uppercase;
 }
