@@ -32,6 +32,10 @@ html, body {
   html, body {
     overflow: auto;
   }
+
+  #outer-wrapper {
+    margin-top: 0;
+  }
 }
 
 body {
@@ -94,11 +98,11 @@ h1 {
 .operator {
   color: #00efea;
   font-size: 2rem;
-  left: -5px;
+  left: 5px;
   line-height: 1;
   padding: 0.5rem;
   position: absolute;
-  top: -10px;
+  top: 0;
 }
 
 .display {
@@ -126,8 +130,8 @@ button {
   font-family: 'Nunito Sans',sans-serif;
   font-size: 3.5rem;
   font-weight: 600;
-  min-height: 5.5rem;
-  min-width: 5.5rem;
+  min-height: 6rem;
+  min-width: 6rem;
   transition: border-color 300ms ease-out;
   width: 25%;
   white-space: nowrap;
