@@ -10,44 +10,49 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="wrapper">
-    <div id="main">
-      <div id="logo">FutureCalc</div>
-      <div id="row1" class="row">
-        <span class="operator"></span>
-        <div class="display">0</div>
-      </div>
-      <div id="row2" class="row">
-        <button type="button" class="all-clear disable-zoom">AC</button>
-        <button type="button" class="posneg disable-zoom">&plus;&sol;&minus;</button>
-        <button type="button" class="percentage disable-zoom">&percnt;</button>
-        <button type="button" class="divide op disable-zoom">&divide;</button>
-      </div>
-      <div id="row3" class="row">
-        <button type="button" class="seven num disable-zoom">7</button>
-        <button type="button" class="eight num disable-zoom">8</button>
-        <button type="button" class="nine num disable-zoom">9</button>
-        <button type="button" class="multiply op disable-zoom">&times;</button>
-      </div>
-      <div id="row4" class="row">
-        <button type="button" class="four num disable-zoom">4</button>
-        <button type="button" class="five num disable-zoom">5</button>
-        <button type="button" class="six num disable-zoom">6</button>
-        <button type="button" class="subtract op disable-zoom">&minus;</button>
-      </div>
-      <div id="row5" class="row">
-        <button type="button" class="one num disable-zoom">1</button>
-        <button type="button" class="two num disable-zoom">2</button>
-        <button type="button" class="three num disable-zoom">3</button>
-        <button type="button" class="add op disable-zoom">&plus;</button>
-      </div>
-      <div id="row6" class="row">
-        <button type="button" class="zero num disable-zoom">0</button>
-        <button type="button" class="decimal num disable-zoom">.</button>
-        <button type="button" class="equals disable-zoom">&equals;</button>
+  <div id="outer-wrapper">
+    <div id="inner-wrapper">
+      <div id="main">
+        <h1>
+          <img src="img/logo.png" alt="NeonCalc" width="100%"/>
+        </h1>
+        <div id="row1" class="row">
+          <span class="operator"></span>
+          <div class="display">0</div>
+        </div>
+        <div id="row2" class="row">
+          <button type="button" class="all-clear disable-zoom">AC</button>
+          <button type="button" class="posneg disable-zoom">&plus;&sol;&minus;</button>
+          <button type="button" class="percentage disable-zoom">&percnt;</button>
+          <button type="button" class="divide op disable-zoom">&divide;</button>
+        </div>
+        <div id="row3" class="row">
+          <button type="button" class="key-7 num disable-zoom">7</button>
+          <button type="button" class="key-8 num disable-zoom">8</button>
+          <button type="button" class="key-9 num disable-zoom">9</button>
+          <button type="button" class="multiply op disable-zoom">&times;</button>
+        </div>
+        <div id="row4" class="row">
+          <button type="button" class="key-4 num disable-zoom">4</button>
+          <button type="button" class="key-5 num disable-zoom">5</button>
+          <button type="button" class="key-6 num disable-zoom">6</button>
+          <button type="button" class="subtract op disable-zoom">&minus;</button>
+        </div>
+        <div id="row5" class="row">
+          <button type="button" class="key-1 num disable-zoom">1</button>
+          <button type="button" class="key-2 num disable-zoom">2</button>
+          <button type="button" class="key-3 num disable-zoom">3</button>
+          <button type="button" class="add op disable-zoom">&plus;</button>
+        </div>
+        <div id="row6" class="row">
+          <button type="button" class="key-0 zero num disable-zoom">0</button>
+          <button type="button" class="decimal num disable-zoom">.</button>
+          <button type="button" class="equals disable-zoom">&equals;</button>
+        </div>
       </div>
     </div>
   </div>
+  <p class="small">Made by <a href="https://github.com/lakeebs">John Lee</a></p>
   <script src="script.js"></script>
 </body>
 </html>

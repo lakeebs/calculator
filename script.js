@@ -11,7 +11,7 @@ let operatorBox = document.querySelector('.operator');
 let result = parseFloat(display.textContent);
 const buttons = document.querySelectorAll('button');
 const buttonsArray = Array.from(buttons);
-const maxChars = 7;
+const maxChars = 8;
 const keyMap = {
   '+': '+',
   '-': '−',
@@ -36,6 +36,87 @@ const keyMap = {
   '9': '9'
 };
 
+// Add event listener for key press
+document.addEventListener('keydown', function(e) {
+  const key = e.key;
+  const isDigit = /^\d$/.test(key);
+  const timeDelay = 100;
+
+  if (isDigit) {
+    const digit = document.querySelector(`.key-${e.key}`);
+    digit.classList.add('active');
+    // Remove active class after a short delay (for visual feedback)
+    setTimeout(() => {
+      digit.classList.remove('active');
+    }, timeDelay);
+  } else if (key === '+') {
+    const addButton = document.querySelector('.add');
+    addButton.classList.add('active');
+    setTimeout(() => {
+      addButton.classList.remove('active');
+    }, timeDelay);
+  } else if (key === '-') {
+    const subtractButton = document.querySelector('.subtract');
+    subtractButton.classList.add('active');
+    setTimeout(() => {
+      subtractButton.classList.remove('active');
+    }, timeDelay);
+    
+  } else if (key === '*') {
+    const multiplyButton = document.querySelector('.multiply');
+    multiplyButton.classList.add('active');
+    setTimeout(() => {
+      multiplyButton.classList.remove('active');
+    }, timeDelay);
+
+  } else if (key === '/') {
+    const divideButton = document.querySelector('.divide');
+    divideButton.classList.add('active');
+    setTimeout(() => {
+      divideButton.classList.remove('active');
+    }, timeDelay);
+
+  } else if (key === '.') {
+    const decimalButton = document.querySelector('.decimal');
+    decimalButton.classList.add('active');
+    setTimeout(() => {
+      decimalButton.classList.remove('active');
+    }, timeDelay);
+
+  } else if (key === '%') {
+    const percentageButton = document.querySelector('.percentage');
+    percentageButton.classList.add('active');
+    setTimeout(() => {
+      percentageButton.classList.remove('active');
+    }, timeDelay);
+
+  } else if (key === 'Enter') {
+    const equalsButton = document.querySelector('.equals');
+    equalsButton.classList.add('active');
+    setTimeout(() => {
+      equalsButton.classList.remove('active');
+    }, timeDelay);
+
+  } else if (key === 'Delete' || key === 'Backspace') {
+      const clearButton = document.querySelector('.clear');
+      const allClearButton = document.querySelector('.all-clear');
+      if (clearButton) {
+        clearButton.classList.add('active');
+        setTimeout(() => {
+          clearButton.classList.remove('active');
+        }, timeDelay);
+      }
+
+      if (allClearButton) {
+        allClearButton.classList.add('active');
+        setTimeout(() => {
+          allClearButton.classList.remove('active');
+        }, timeDelay);
+      }
+    }
+  
+});
+
 // Keypad event listener
 let lastKeyPressTime = 0;
 let lastKeyPressKey = '';
@@ -54,7 +135,6 @@ document.addEventListener('keydown', function(e) {
   } 
   
   if (e.key === 'Delete' || e.key === 'Backspace') {
-    
     const currentTime = new Date().getTime();
 
     if (key === lastKeyPressKey && currentTime - lastKeyPressTime < 300) { // Adjust the double tap time
@@ -145,6 +225,10 @@ function buttonClick(e) {
     // IF USER CLICKS AN OPERATOR
     if (e.target.classList.contains('op')) {
 
+      if (display.classList.contains('egg')) {
+        return;
+      }
+
       // Prevent multiple operations from clicking on operators continuously
       if (!(operatorBox.textContent == '')) {
         operatorBox.textContent = e.target.textContent;
@@ -218,6 +302,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('clear')) {
       display.textContent = '0';
       showsDecimal = false;
+      display.classList.remove('egg');
       clear.classList.add('all-clear');
       clear.classList.remove('clear');
       clear.textContent = 'AC';
@@ -242,6 +327,10 @@ function buttonClick(e) {
 
     // IF USER CLICKS THE PERCENTAGE BUTTON
     if (e.target.classList.contains('percentage')) {
+      if (display.classList.contains('egg')) {
+        return;
+      }
+
       let percentage = display.textContent * Math.pow(10, -2);
       
       // Truncate output to maxChars
@@ -372,6 +461,7 @@ function allClear() {
   operatorBox.textContent = '';
   clear.textContent = 'AC';
   showsDecimal = false;
+  display.classList.remove('egg');
   clear.classList.add('all-clear');
   clear.classList.remove('clear');
   return;
@@ -383,3 +473,5 @@ function addZeroToDecimal() {
     display.textContent = '0' + display.textContent;
   }
 };
+
+// Bug: If zero is clicked and any other key other than equals is clicked, it locks up.
