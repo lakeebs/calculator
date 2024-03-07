@@ -11,7 +11,7 @@ let operatorBox = document.querySelector('.operator');
 let result = parseFloat(display.textContent);
 const buttons = document.querySelectorAll('button');
 const buttonsArray = Array.from(buttons);
-const maxChars = 8;
+const maxChars = 7;
 const keyMap = {
   '+': '+',
   '-': '−',
