@@ -94,7 +94,7 @@ h1 {
   border: 2px solid #322c59;
   color: #00efea;
   font-family: 'digital-7regular', sans-serif;
-  font-size: 5rem;
+  font-size: 4.5rem;
   line-height: 1;
   padding: 3px 10px;
   text-align: right;
@@ -159,7 +159,7 @@ button.op:active, button.op.active {
   color: #484281;
   font-family: 'Nunito Sans', sans-serif;
   font-size: 10px;
-  margin-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
   text-transform: uppercase;
 }

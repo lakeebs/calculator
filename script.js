@@ -261,7 +261,7 @@ function buttonClick(e) {
     if (e.target.classList.contains('equals')) {
 
       if (display.textContent == '838383') {
-        display.textContent = 'hi jennie';
+        display.textContent = 'jennie <3';
         display.classList.add('egg');
         operated = true;
         return;
